@@ -1,115 +1,39 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>[이름]의 자기소개 및 포트폴리오</title>
-    <style>h2{color:#2F6F9E;}</style>
-</head>
-<body>
-
-
-    <!-- [header] 문서의 맨 위, 이름과 핵심 슬로건을 배치 -->
-    <header>
-        <h1>[이름을 입력하세요]</h1>
-        <p><strong>"[50대 인생의 깊이를 담은 한 줄 슬로건 또는 핵심 가치관]"</strong></p>
-    </header>
-
-    <!-- [nav] 페이지 내 주요 섹션으로 바로 이동할 수 있는 메뉴 링크 -->
-    <nav>
-        <ul>
-            <li><a href="#about">인생관 및 소개</a></li>
-            <li><a href="#history">주요 경력 및 연혁</a></li>
-            <li><a href="#skills">전문 역량</a></li>
-            <li><a href="#contact">연락처</a></li>
-             <li><a href=".\가위바위보게임.html">가위바위보게임</a></li>
-        </ul>
-    </nav>
-
-    <hr>
-
-    <!-- [main] 이 페이지의 가장 핵심이 되는 본문 콘텐츠 -->
-    <main>
-         <img src="./images/moonie.jpg" width="400">
-
-        <!-- [section 1] 소개글 및 인생관 -->
-        <section id="about">
-            <h2>📝 About Me (소개 및 인생관)</h2>
-            <!-- [article] 독립적인 하나의 완성된 이야기(수필, 에세이 등)를 담을 때 사용 -->
-            <article>
-                <h3>[예: 20년 경력의 전문성을 바탕으로 새로운 도전을 이어갑니다]</h3>
-                <p>
-                    [이곳에 본인의 살아온 여정, 가치관, 성격의 장점 등을 자유롭게 적어보세요.]<br>
-                    [50대만의 차별화된 연륜, 위기 관리 능력, 혹은 새로운 분야에 도전하는 열정 등을 녹여내면 더욱 좋습니다.]
-                </p>
-            </article>
-        </section>
-
+<!DOCTYPE html><html lang="ko"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>[이름]의 자기소개 및 포트폴리오</title>    <style>        /* 1. 기본 스타일 초기화 및 웹 폰트 설정 */        * {            margin: 0;            padding: 0;            box-sizing: border-box;        }
+        body {            /* 현대적이고 가독성 높은 프리텐다드 및 시스템 폰트 적용 */            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;            background-color: #f1f5f9; /* 배경을 조금 더 차분한 톤으로 다운 */            color: #1e293b; /* 텍스트 대비를 높여 시니어 층도 읽기 편하게 수정 */            line-height: 1.8;            padding: 0 20px;        }
+        /* 구분선 디자인 개선 */        hr {            border: none;            border-top: 1px dashed #cbd5e1;            margin: 50px 0;        }
+        /* 2. 레이아웃 컨테이너 */        .wrapper {            max-width: 840px;            margin: 60px auto;            background-color: #ffffff;            padding: 50px 60px;            border-radius: 16px;            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); /* 더 부드럽고 고급스러운 그림자 */        }
+        /* 3. 헤더 (Header) */        header {            text-align: center;            margin-bottom: 40px;        }
+        header h1 {            font-size: 2.6rem;            color: #0f172a; /* 신뢰감을 주는 다크 네이비 */            margin-bottom: 16px;            font-weight: 800;            letter-spacing: -0.03em;        }
+        header p strong {            font-size: 1.2rem;            color: #2563eb; /* 포인트 블루 컬러 */            font-weight: 600;            background: #eff6ff; /* 과한 그라데이션 대신 깔끔한 배경색 박스 처리 */            padding: 6px 16px;            border-radius: 50px;            display: inline-block;        }
+        /* 4. 네비게이션 메뉴 (Nav) */        nav {            margin-bottom: 20px;        }
+        nav ul {            list-style: none;            display: flex;            justify-content: center;            background-color: #f8fafc;            padding: 8px;            border-radius: 30px; /* 라운드를 크게 주어 부드러운 느낌 강조 */            border: 1px solid #e2e8f0;            gap: 5px;        }
+        nav ul li a {            display: block;            padding: 8px 24px;            color: #64748b;            text-decoration: none;            font-weight: 600;            font-size: 0.95rem;            border-radius: 20px;            transition: all 0.2s ease-in-out;        }
+        nav ul li a:hover {            background-color: #0f172a;            color: #ffffff;        }
+        /* 5. 메인 콘텐츠 및 이미지 (Main) */        main img {            display: block;            width: 180px; /* 부담스럽지 않은 프로필 크기로 조정 */            height: 180px;            border-radius: 50%; /* 유행을 타지 않는 깔끔한 원형 처리 */            margin: 0 auto 40px auto;            box-shadow: 0 4px 14px rgba(0,0,0,0.08);            object-fit: cover;            border: 4px solid #ffffff;            outline: 1px solid #e2e8f0;        }
+        /* 섹션 공통 타이틀 스타일 */        section h2 {            font-size: 1.5rem;            color: #0f172a;            margin-bottom: 24px;            display: flex;            align-items: center;            gap: 8px;        }
+        /* 소개글 에세이 영역 */        article h3 {            font-size: 1.25rem;            color: #1e293b;            margin-bottom: 14px;            font-weight: 700;            line-height: 1.4;        }
+        article p {            color: #475569;            font-size: 1.05rem;            word-break: keep-all; /* 한글 단어가 어색하게 잘리지 않도록 설정 */        }
+        /* 6. 경력 사항 테이블 */        table {            width: 100%;            border-collapse: collapse;            margin-top: 15px;            font-size: 0.95rem;        }
+        table th, table td {            padding: 16px;            text-align: left;            vertical-align: top; /* 내용이 길어져도 정렬이 깨지지 않게 위쪽 정렬 */        }
+        table th {            background-color: #f8fafc;            color: #475569;            font-weight: 700;            border-bottom: 2px solid #e2e8f0;            font-size: 0.9rem;            letter-spacing: 0.05em;        }
+        table td {            border-bottom: 1px solid #f1f5f9;            color: #475569;        }
+        table tbody tr:hover {            background-color: #f8fafc;        }
+        table td strong {            color: #0f172a;            font-size: 1rem;        }
+        /* 7. 역량 및 연락처 리스트 (List) */        section ul {            list-style-type: none;            padding-left: 0;        }
+        section ul li {            position: relative;            padding-left: 24px;            margin-bottom: 16px;            font-size: 1.05rem;            color: #475569;        }
+        /* 불릿 아이콘을 심플하고 세련된 사각형 아이콘으로 변경 */        section ul li::before {            content: "";            position: absolute;            left: 4px;            top: 10px;            width: 6px;            height: 6px;            background-color: #2563eb;            border-radius: 2px;        }
+        section ul li strong {            color: #0f172a;            display: inline-block;            min-width: 110px;            font-weight: 700;        }
+        #contact ul li a {            color: #2563eb;            text-decoration: none;            font-weight: 600;            border-bottom: 1px solid transparent;            transition: all 0.2s;        }
+        #contact ul li a:hover {            border-bottom: 1px solid #2563eb;        }        /* 8. 푸터 (Footer) */        footer {            text-align: center;            margin-top: 60px;            padding-top: 30px;            border-top: 1px solid #e2e8f0;            color: #94a3b8;            font-size: 0.85rem;        }        footer p {            margin-bottom: 6px;        }
+        /* 9. 반응형 디자인 (모바일 화면 최적화) */        @media (max-width: 640px) {            .wrapper {                padding: 30px 20px;                margin: 20px auto;            }            header h1 {                font-size: 2rem;            }            nav ul {                flex-direction: column;                padding: 6px;                border-radius: 12px;            }            nav ul li a {                width: 100%;                text-align: center;                padding: 8px 0;                border-radius: 8px;            }            table, thead, tbody, th, td, tr {                display: block;            }            table th {                display: none;            }            table td {                border: none;                padding: 6px 0;            }            table td:first-child {                font-weight: 700;                color: #2563eb;                font-size: 0.85rem;                padding-top: 20px;            }            table tr {                border-bottom: 1px solid #f1f5f9;                padding-bottom: 15px;            }            table tr:box-shadow {                border-bottom: none;            }        }    </style></head><body>    <div class="wrapper">        <header>            <h1>[홍길동]</h1>            <p><strong>"20년의 현장 노하우와 유연한 소통으로 가치를 만드는 전문가"</strong></p>        </header>
+        <nav>            <ul>                <li><a href="#about">인생관 및 소개</a></li>                <li><a href="#history">주요 경력 및 연혁</a></li>                <li><a href="#skills">전문 역량</a></li>                <li><a href="#contact">연락처</a></li>            </ul>        </nav>
         <hr>
-
-        <!-- [section 2] 주요 경력 및 활동 사항 -->
-        <section id="history">
-            <h2>💼 경력 및 활동 사항</h2>
-            <table border="1" cellpadding="5" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>기간</th>
-                        <th>활동 및 소속 (회사/단체)</th>
-                        <th>담당 업무 및 성과</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>[2020 ~ 현재]</td>
-                        <td><strong>[회사/기관명]</strong></td>
-                        <td>[어떤 직책으로 어떤 중요한 역할을 하셨는지 기재]</td>
-                    </tr>
-                    <tr>
-                        <td>[2010 ~ 2020]</td>
-                        <td><strong>[회사/기관명]</strong></td>
-                        <td>[과거의 주요 경력 기재]</td>
-                    </tr>
-                    <tr>
-                        <td>[기타 활동]</td>
-                        <td><strong>[사회 활동/봉사/자격증 등]</strong></td>
-                        <td>[경력 외에 가치 있었던 대외 활동 기재]</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <hr>
-
-        <!-- [section 3] 전문 역량 및 강점 -->
-        <section id="skills">
-            <h2>🛠 전문 역량 (Skills)</h2>
-            <ul>
-                <li><strong>[전문 분야 1]:</strong> [수십 년간 쌓아온 노하우, 리더십, 업무 조율 능력 등]</li>
-                <li><strong>[전문 분야 2]:</strong> [현재 다룰 수 있는 기술, 툴, 혹은 자격증 정보]</li>
-                <li><strong>[부드러운 역량]:</strong> [소통 능력, 성실함, 끈기 등 인성적인 강점]</li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <!-- [section 4] 연락처 안내 -->
-        <section id="contact">
-            <h2>📞 Contact</h2>
-            <ul>
-                <li><strong>이메일:</strong> [example@email.com]</li>
-                <li><strong>연락처:</strong> [010-XXXX-XXXX]</li>
-                <li><strong>블로그/SNS:</strong> <a href="[링크주소]">[블로그 이름 또는 링크]</a></li>
-            </ul>
-        </section>
-
-    </main>
-
-    <hr>
-
-    <!-- [footer] 문서 하단의 저작권 정보 및 마무리 문구 -->
-    <footer>
-        <p>Copyright 2026. [이름] All rights reserved.</p>
-        <p><small>본 페이지는 웹 표준 시멘틱 태그를 준수하여 작성되었습니다.</small></p>
-    </footer>
-
-</body>
-</html>
+        <main>            <img src="./images/moonie.jpg" alt="프로필 사진">
+            <section id="about">                <h2>📝 About Me (소개 및 인생관)</h2>                <article>                    <h3>20년 경력의 전문성을 바탕으로 새로운 도전을 이어갑니다</h3>                    <p>                        이곳에 본인의 살아온 여정, 가치관, 성격의 장점 등을 자유롭게 적어보세요.                        50대만의 차별화된 연륜, 위기 관리 능력, 혹은 새로운 분야에 도전하는 열정 등을 녹여내면 더욱 좋습니다.                    </p>                </article>            </section>
+            <hr>
+            <section id="history">                <h2>💼 경력 및 활동 사항</h2>                <table>                    <thead>                        <tr>                            <th>기간</th>                            <th>활동 및 소속 (회사/단체)</th>                            <th>담당 업무 및 성과</th>                        </tr>                    </thead>                    <tbody>                        <tr>                            <td>2020 ~ 현재</td>                            <td><strong>[회사/기관명]</strong></td>                            <td>어떤 직책으로 어떤 중요한 역할을 하셨는지 기재</td>                        </tr>                        <tr>                            <td>2010 ~ 2020</td>                            <td><strong>[회사/기관명]</strong></td>                            <td>과거의 주요 경력 기재</td>                        </tr>                        <tr>                            <td>기타 활동</td>                            <td><strong>[사회 활동/봉사/자격증 등]</strong></td>                            <td>경력 외에 가치 있었던 대외 활동 기재</td>                        </tr>                    </tbody>                </table>            </section>
+            <hr>
+            <section id="skills">                <h2>🛠 전문 역량 (Skills)</h2>                <ul>                    <li><strong>전문 분야 1</strong> 수십 년간 쌓아온 노하우, 리더십, 업무 조율 능력 등</li>                    <li><strong>전문 분야 2</strong> 현재 다룰 수 있는 기술, 툴, 혹은 자격증 정보</li>                    <li><strong>부드러운 역량</strong> 소통 능력, 성실함, 끈기 등 인성적인 강점</li>                </ul>            </section>
+            <hr>
+            <section id="contact">                <h2>📞 Contact</h2>                <ul>                    <li><strong>이메일</strong> [example@email.com]</li>                    <li><strong>연락처</strong> [010-XXXX-XXXX]</li>                    <li><strong>블로그/SNS</strong> <a href="[링크주소]">[블로그 이름 또는 링크]</a></li>                </ul>            </section>        </main>
+        <footer>            <p>Copyright 2026. [이름] All rights reserved.</p>            <p><small>본 페이지는 웹 표준 시멘틱 태그를 준수하여 작성되었습니다.</small></p>        </footer>    </div></body></html>
