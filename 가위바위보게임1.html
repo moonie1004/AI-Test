@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반응형 가위바위보 게임</title>
+    <style>
+        /* 기본 리셋 및 전체 정렬 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        /* 버튼 그룹 */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        button {
+            flex: 1;
+            max-width: 150px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        /* 시작 버튼 스타일 */
+        .btn-start { background-color: #28a745; }
+        .btn-start:hover:not(:disabled) { background-color: #218838; }
+        
+        /* 중지 버튼 스타일 */
+        .btn-stop { background-color: #dc3545; }
+        .btn-stop:hover:not(:disabled) { background-color: #bd2130; }
+
+        /* 비활성화(disabled) 상태의 버튼 공통 스타일 */
+        button:disabled {
+            background-color: #ccc !important;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* 웹캠 박스 크기 */
+        #webcam-container {
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 25px auto;
+            border: 5px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #webcam-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+        }
+
+        /* 결과 창 디자인 */
+        #result-container {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007BFF;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            border: 2px dashed #007BFF;
+        }
+
+        /* 모바일 최적화 미디어 쿼리 */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .container { padding: 20px; }
+            button { padding: 10px; font-size: 0.9rem; }
+            #result-container { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>가위바위보 게임</h1>
+        
+        <div class="btn-group">
+            <button type="button" id="btn-start" class="btn-start" onclick="init()">시작하기</button>
+            <button type="button" id="btn-stop" class="btn-stop" onclick="stopGame()" disabled>중지하기</button>
+        </div>
+        
+        <div id="webcam-container"></div>
+        <div id="result-container">결과 대기 중...</div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    const URL = "https://teachablemachine.withgoogle.com/models/VmAAozYDrI/";
+
+    let model, webcam, resultContainer, maxPredictions;
+    let lastUpdateTime = 0; 
+    let isPlaying = false; 
+    let animationId; 
+
+    // 버튼 요소를 JavaScript 변수로 가져오기
+    let startBtn, stopBtn;
+
+    async function init() {
+        if (isPlaying) return;
+
+        // 변수에 버튼 요소 할당
+        startBtn = document.getElementById("btn-start");
+        stopBtn = document.getElementById("btn-stop");
+
+        resultContainer = document.getElementById("result-container");
+        resultContainer.innerHTML = "모델 로딩 중...";
+
+        // 시작 버튼은 비활성화, 중지 버튼은 활성화
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+
+        if (!model) {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+        }
+
+        if (!webcam) {
+            const flip = true; 
+            webcam = new tmImage.Webcam(320, 320, flip); 
+            await webcam.setup(); 
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+        }
+
+        await webcam.play();
+        isPlaying = true;
+        resultContainer.innerHTML = "게임 시작!";
+        
+        animationId = window.requestAnimationFrame(loop);
+    }
+
+    async function loop(timestamp) {
+        if (!isPlaying) return; 
+
+        webcam.update(); 
+
+        if (timestamp - lastUpdateTime >= 500) {
+            await predict();
+            lastUpdateTime = timestamp; 
+        }
+
+        animationId = window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+        if (!model || !webcam) return;
+        
+        const prediction = await model.predict(webcam.canvas);
+        
+        let highestClassName = "";
+        let highestProbability = 0;
+
+        for (let i = 0; i < maxPredictions; i++) {
+            if (prediction[i].probability > highestProbability) {
+                highestProbability = prediction[i].probability;
+                highestClassName = prediction[i].className;
+            }
+        }
+
+        resultContainer.innerHTML = highestClassName;
+    }
+
+    function stopGame() {
+        if (!isPlaying) return; 
+
+        isPlaying = false;
+        if (webcam) {
+            webcam.pause(); 
+        }
+        if (animationId) {
+            window.cancelAnimationFrame(animationId); 
+        }
+        
+        // 게임이 멈추면 다시 시작 버튼을 켜고, 중지 버튼을 끕니다.
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+
+        resultContainer.innerHTML = "일시 정지됨";
+    }
+</script>
+
+</body>
+</html>
